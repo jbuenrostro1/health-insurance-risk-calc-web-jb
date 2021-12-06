@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<!--
+    Author:  Jazmin Buenrostro 
+
+    Project: Health Insurance Risk Calculator for the Web
+    Credit: Eric Pogue
+
+    All rights reserved.
+-->
+    <head>
+        <meta charset="UTF-8">
+        <title>Health Insurance Risk Calculator 2021</title>
+        <link rel="stylesheet" href="health-insurance-calc.css">
+        <script src="health-insurance-calc.js"></script>
+
+    </head>
+
+<body onload="initApplication()">
+    <h1>Health Insurance Risk Calculator - JB v1.1</h1> 
+	<h2>Health Insurance Risk Calculator for the Web</h2>
+	<p>Hello, and thank you for choosing my Health Risk Calculator for the Web application. 
+        <p>This application will be used to determine your insurance based on your health risk. </p>
+        <p>We will be determining your risk based off your body-mass index, blood pressure, age, and family history of disease.</p>
+        Your score will be calculated at the end determine your insurance.
+       </p>
+       
+       <label>Select your current age.</label> </br>
+       
+       <select id="age_ID">
+       <option value="0"> Under 30 years old</option>
+       <option value="10">30 to 45 years old</option>
+       <option value="20">45 to 60 years old</option>
+       <option value="30">Over 60 years old</option>
+    </select>
+
+    <br/><br/>
+
+    <p> We will now be calculating you Body-Mass Index. Please answer the following questions using your best guess.</p>
+
+    <label> Select your height in inches.</label>
+    <select id="height_ID">
+        <option value= "50">50 inches or below</option>
+        <option value= "52">52 inches</option>
+        <option value= "54">54 inches</option>
+        <option value= "56">56 inches</option>
+        <option value= "58">58 inches</option>
+        <option value= "60">60 inches</option>
+        <option value= "62">62 inches</option>
+        <option value= "64">64 inches</option>
+        <option value= "66">66 inches</option>
+        <option value= "68">68 inches</option>
+        <option value= "70">70 inches</option>
+        <option value= "72">72 inches</option>
+        <option value= "74">74 inches</option>
+        <option value= "76">76 inches</option>
+        <option value= "78">78 inches</option>
+        <option value= "80">80 inches</option>
+        <option value= "82">82 inches</option>
+        <option value= "84">84 inches or above</option>
+    </select>
+
+    <br/><br/>
+    <label> Select your weight in pounds(lbs).</label>
+    <select id="weight_ID">
+        <option value= "100">100 lbs or below</option>
+        <option value= "110">110 lbs</option>
+        <option value= "120">120 lbs</option>
+        <option value= "130">130 lbs</option>
+        <option value= "140">140 lbs</option>
+        <option value= "150">150 lbs</option>
+        <option value= "160">160 lbs</option>
+        <option value= "170">170 lbs</option>
+        <option value= "180">180 lbs</option>
+        <option value= "190">190 lbs</option>
+        <option value= "200">200 lbs</option>
+        <option value= "210">210 lbs</option>
+        <option value= "220">220 lbs</option>
+        <option value= "230">230 lbs</option>
+        <option value= "240">240 lbs</option>
+        <option value= "250">250 lbs</option>
+        <option value= "260">260 lbs</option>
+        <option value= "270">270 lbs</option>
+        <option value= "280">280 lbs</option>
+        <option value= "290">290 lbs</option>
+        <option value= "300">300 lbs or above</option>
+    </select>
+
+    <br/><br/>
+
+   <button onclick="calculateBMI()">Calculate Users Body-Mass Index (BMI)</button>
+   <h3 id="bmiCalc_ID" ></h3>
+   <p> Select "Normal" if your BMI is lower than 24.9</p>
+   <p>Select "Overweight" if your BMI lower than 29.9, but higher than 24.9</p>
+   <p>Select "Obese" if your BMI is above 29.9</p>
+
+    <label>Select your Body-Mass Index (BMI).</label> </br>
+
+    <select id="bmi_ID"> 
+       <option value="0"> Normal</option>
+       <option value="30">Overweight</option>
+       <option value="75">Obese</option>
+    </select>
+
+    <br/><br/>
+    <label>Select your blood pressure.</label> </br>
+   
+    <select id="bloodPressure_ID">
+        <option value="0">Normal</option>
+		<option value="15">Elevated</option>
+		<option value="30">Stage 1</option>
+		<option value="75">Stage 2</option>
+		<option value="100">Crisis</option>
+	</select>
+
+    <br/><br/>
+    <label>Do you have diabetes and/or is there a family history of diabetes?</label> </br>
+
+    <select id="diabetes_ID">
+        <option value="0">Yes</option>
+		<option value="10">No</option>
+	</select>
+
+    <br/><br/>
+    <label>Do you have cancer and/or is there a family history of cancer?</label> </br>
+
+    <select id="cancer_ID">
+        <option value="0">Yes</option>
+		<option value="10">No</option>
+	</select>
+
+    <br/><br/>
+    <label>Do you have Alzheimer's and/or is there a family history of Alzheimer's?</label> </br>
+
+    <select id="alzheimers_ID">
+        <option value="0">Yes</option>
+		<option value="10">No</option>
+	</select>
+
+    <br/><br/><br/>
+    <button onclick="calculateRiskFactors()">Calculate Risk Factors</button>
+	<p id="risk_ID"></p>
+
+<script>
+     console.log("Begin Health Insurance Risk Calculator...");
+
+function calculateRiskFactors() {
+    console.log("calculateRiskFactors()");
+
+function BMI(height,weight) {
+    return (703 * weight) / (height * height)
+}
+function calculateBMI() {
+    console.log("calculateBMI()");
+    let heightInches = parseInt(document.getElementById("height_ID").selectedOptions[0].value);
+    let weightLbs = parseInt(document.getElementById("weight_ID").selectedOptions[0].value)
+
+    console.log("Height = " + heightInches + "Weight = " + weightLbs);
+
+    let bmiAnswerValue = BMI(heightInches,weightLbs)
+    console.log("Body-Mass Index (BMI) = " + bmiAnswerValue)
+
+    bmiAnswerValue = Math.round(bmiAnswerValue * 10)/10
+    console.log("Body-Mass Index (BMI) = " + bmiAnswerValue)
+
+    document.getElementById("bmiCalc_ID").innerHTML = "Body-Mass Index (BMI) = " + bmiAnswerValue;
+}
+
+    // Obtain all the values from the answered user input
+
+    let ageAnswerValue = parseInt(document.getElementById("age_ID").selectedOptions[0].value);
+    console.log("ageAnswerValue = " + ageAnswerValue)
+
+    let bmiAnswerValue = parseInt(document.getElementById("bmi_ID").selectedOptions[0].value);
+	console.log("bmiAnswerValue = " + bmiAnswerValue);
+
+    let bloodPressureAnswerValue = parseInt(document.getElementById("bloodPressure_ID").selectedOptions[0].value);
+	console.log("bloodPressureAnswerValue = " + bloodPressureAnswerValue);
+
+    let diabetesAnswerValue = parseInt(document.getElementById("diabetes_ID").selectedOptions[0].value);
+	console.log("diabetesAnswerValue = " + diabetesAnswerValue);
+
+    let cancerAnswerValue = parseInt(document.getElementById("cancer_ID").selectedOptions[0].value);
+	console.log("cancerAnswerValue = " + cancerAnswerValue);
+
+    let alzheimersAnswerValue = parseInt(document.getElementById("alzheimers_ID").selectedOptions[0].value);
+	console.log("alzheimersAnswerValue = " + alzheimersAnswerValue);
+
+    let totalHealthRisk = ageAnswerValue + bmiAnswerValue + bloodPressureAnswerValue + diabetesAnswerValue + cancerAnswerValue + alzheimersAnswerValue;
+	console.log("totalHealthRisk = " + totalHealthRisk)
+
+    document.getElementById("risk_ID").innerHTML = "Your total score based off your health risks is: " + totalHealthRisk;
+
+    let messageToUser = "Based on your scores, you are a considered an uninsurable patient."
+        if (totalHealthRisk <= 20) {
+            messageToUser = "Based on your scores, you are  considered a low risk patient."
+        } else if (totalHealthRisk <= 50) {
+            messageToUser = "Based on your scores, you are considered a moderate risk patient."
+        } else if (totalHealthRisk <= 75 ) {
+            messageToUser = "Based on your scores, you are considered a high risk patient."
+        }
+        document.getElementById("risk_ID").innerHTML = messageToUser;
+}
+    
+
+</script>
+</body>
+</html>
